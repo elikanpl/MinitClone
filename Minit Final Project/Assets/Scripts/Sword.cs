@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
+    public float distance;
+    public float delay;
+    public float duration;
+
     private GameObject player;
     private Player playerScript;
     private SpriteRenderer spriteRenderer;
-    public float distance;
     private Vector3 rotation;
-    private bool rotated;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +29,7 @@ public class Sword : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.X))
         {
             playerScript.sleep = true;
-            Invoke("Appear", 0.5f);
+            Invoke("Appear", delay);
         }
         
     }
@@ -39,28 +41,28 @@ public class Sword : MonoBehaviour
         Vector3 newPos = new Vector3(player.transform.position.x, player.transform.position.y, this.transform.position.z);
         if (playerScript.direction == "right")
         {
-            rotation.z = 0;
+            rotation.z = 270;
             newPos.x += distance;
         }
         if (playerScript.direction == "up")
         {
-            rotation.z = 90;
+            rotation.z = 0;
             newPos.y += distance;
         }
         if (playerScript.direction == "down")
         {
-            rotation.z = 90;
+            rotation.z = 180;
             newPos.y -= distance;
         }
         if (playerScript.direction == "left")
         {
-            rotation.z = 0;
+            rotation.z = 90;
             newPos.x -= distance;
             
         }
         this.transform.position = newPos;
         gameObject.transform.Rotate(rotation, Space.World);
-        Invoke("Disappear", 1);
+        Invoke("Disappear", duration);
     }
 
     private void Disappear()
