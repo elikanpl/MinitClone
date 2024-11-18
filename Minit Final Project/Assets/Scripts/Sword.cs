@@ -7,10 +7,12 @@ public class Sword : MonoBehaviour
     public float distance;
     public float delay;
     public float duration;
+    public int crabsDestroyed;
 
     private GameObject player;
     private Player playerScript;
     private SpriteRenderer spriteRenderer;
+    private Collider2D colliderComponent;
     private Vector3 rotation;
 
     // Start is called before the first frame update
@@ -18,7 +20,8 @@ public class Sword : MonoBehaviour
     {
         player = GameObject.Find("Player");
         playerScript = player.GetComponent<Player>();
-        spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer = this.GetComponent<SpriteRenderer>();
+        colliderComponent = this.GetComponent<Collider2D>();
         spriteRenderer.enabled = false;
         rotation = new Vector3(0, 0, 0);
     }
@@ -38,6 +41,7 @@ public class Sword : MonoBehaviour
     private void Appear()
     {
         spriteRenderer.enabled = true;
+        colliderComponent.enabled = true;
         Vector3 newPos = new Vector3(player.transform.position.x, player.transform.position.y, this.transform.position.z);
         if (playerScript.direction == "right")
         {
@@ -69,6 +73,20 @@ public class Sword : MonoBehaviour
     {
         gameObject.transform.rotation = Quaternion.identity;
         spriteRenderer.enabled = false;
+        colliderComponent.enabled = false;
         playerScript.sleep = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        DestroyableObject destroyable = collision.gameObject.GetComponent<DestroyableObject>();
+        if (destroyable != null)
+        {
+            if(collision.gameObject.CompareTag("Crab"))
+            {
+                crabsDestroyed += 1;
+            }
+            destroyable.Deactivate();        
+        }
     }
 }
