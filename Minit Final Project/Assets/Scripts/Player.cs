@@ -68,6 +68,6 @@ public class Player : MonoBehaviour
 
             }
         }
-        this.transform.position += vel;
+        this.transform.position += vel*Time.deltaTime;
     }
 }
