@@ -9,9 +9,16 @@ public class Player : MonoBehaviour
     public string direction;
     public bool sleep;
 
+    private bool isFacingRight = true;
+
+    SpriteRenderer spriteRenderer;
+
     void Start()
     {
         sleep = false;
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+      
     }
 
     // Update is called once per frame
@@ -26,11 +33,26 @@ public class Player : MonoBehaviour
                 vel += new Vector3(moveSpeed, 0, 0);
                 direction = "right";
 
+                if (isFacingRight == false) {
+                    spriteRenderer.flipX = false;
+                    isFacingRight = true;
+
+                }
+
             }
             if (Input.GetKey(KeyCode.A))
             {
                 vel += new Vector3(-moveSpeed, 0, 0);
                 direction = "left";
+
+                if (isFacingRight == true)
+                {
+                    spriteRenderer.flipX = true;
+                    isFacingRight = false;
+                }
+                    
+               
+
 
             }
             if (Input.GetKey(KeyCode.W))
