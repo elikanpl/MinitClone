@@ -12,6 +12,14 @@ public class ResetableObject : MonoBehaviour
     }
     public void Reset()
     {
+        if(this.GetComponent<SpriteRenderer>() != null)
+        {
+            this.GetComponent<SpriteRenderer>().enabled = true;
+        }
+        if (this.GetComponent<Collider2D>() != null)
+        {
+            this.GetComponent<Collider2D>().enabled = true;
+        }
         transform.position = start;
     }
 }
