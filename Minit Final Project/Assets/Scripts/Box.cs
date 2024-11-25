@@ -35,39 +35,41 @@ public class Box : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        direction = GameObject.Find("Player").GetComponent<Player>().direction;
-        boxMoveSpeed = GameObject.Find("Player").GetComponent<Player>().moveSpeed;
-
-        Vector3 vel = new Vector3(0, 0, 0);
-
-        if (isCurrentlyColliding)
+        if (Inventory.reference.coffee)
         {
-            Debug.Log("colliding");
+            direction = GameObject.Find("Player").GetComponent<Player>().direction;
+            boxMoveSpeed = GameObject.Find("Player").GetComponent<Player>().moveSpeed;
 
-            if (direction == "right")
-            {
-                vel += new Vector3(boxMoveSpeed, 0, 0);
-                Debug.Log("right");
-            }
-            if (direction == "left")
-            {
-                vel += new Vector3(-boxMoveSpeed, 0, 0);
-                Debug.Log("left");
-            }
-            if (direction == "up")
-            {
-                vel += new Vector3(0, boxMoveSpeed, 0);
-                Debug.Log("up");
-            }
-            if (direction == "down")
-            {
-                vel += new Vector3(0, -boxMoveSpeed, 0);
-                Debug.Log("down");
+            Vector3 vel = new Vector3(0, 0, 0);
 
+            if (isCurrentlyColliding)
+            {
+                Debug.Log("colliding");
+
+                if (direction == "right")
+                {
+                    vel += new Vector3(boxMoveSpeed, 0, 0);
+                    Debug.Log("right");
+                }
+                if (direction == "left")
+                {
+                    vel += new Vector3(-boxMoveSpeed, 0, 0);
+                    Debug.Log("left");
+                }
+                if (direction == "up")
+                {
+                    vel += new Vector3(0, boxMoveSpeed, 0);
+                    Debug.Log("up");
+                }
+                if (direction == "down")
+                {
+                    vel += new Vector3(0, -boxMoveSpeed, 0);
+                    Debug.Log("down");
+
+                }
             }
+            this.transform.position += vel * Time.deltaTime;
         }
-        this.transform.position += vel*Time.deltaTime;
-        
     }
    
     

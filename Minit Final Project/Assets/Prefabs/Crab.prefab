@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3077055798988738339}
   - component: {fileID: 8983975126995106409}
   - component: {fileID: -7409433386673685889}
-  - component: {fileID: 3283621925568231561}
   - component: {fileID: 1764597949144953629}
+  - component: {fileID: 77623517200296183}
   m_Layer: 0
   m_Name: Crab
   m_TagString: Crab
@@ -48,7 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04aca6ed8c0f3264f83a0082f1b68255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  speed: 1
+  xSize: 1.5
   minX: -1.5
   maxX: 1.5
 --- !u!212 &8983975126995106409
@@ -115,18 +116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 044e7c28bb988cb4887104cd4fb5eebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3283621925568231561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2577868491016158551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 765d0260017704a5baf240f415c3ad4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &1764597949144953629
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -172,3 +161,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.28, y: 1.28}
   m_EdgeRadius: 0
+--- !u!114 &77623517200296183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2577868491016158551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94688f1c9a573cf4b8d90e759ab8c87c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -8,6 +8,7 @@ public class Crab : MonoBehaviour
     private float newX;
     //private float originalY;
     public float speed;
+    public float xSize;
     public float minX;
     public float maxX;
     private Vector3 newPosition;
@@ -17,6 +18,8 @@ public class Crab : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        minX = this.transform.position.x - xSize;
+        maxX = this.transform.position.x + xSize;
         x = Random.Range(minX, maxX);
         newPosition = new Vector3(x, this.transform.position.y, this.transform.position.z);
         this.transform.position = newPosition;

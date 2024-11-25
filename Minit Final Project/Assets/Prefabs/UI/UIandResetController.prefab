@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bce4b402957af4eb6977dbc39d0f299a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimerActive: 1
+  TimerActive: 0
   currentTime: 0
 --- !u!114 &1869787803596371057
 MonoBehaviour:
