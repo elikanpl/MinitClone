@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -9,7 +10,11 @@ public class Player : MonoBehaviour
     public string direction;
     public bool sleep;
 
+
+
     private bool isFacingRight = true;
+
+    private bool isDead = false;
 
     public Sprite death;
 
@@ -21,7 +26,7 @@ public class Player : MonoBehaviour
 
         spriteRenderer = this.GetComponent<SpriteRenderer>();
 
-     
+
 
     }
 
@@ -77,6 +82,7 @@ public class Player : MonoBehaviour
             if (Input.GetKey(KeyCode.R))
             {
                 spriteRenderer.sprite = death;
+                isDead = true;
 
             }
         }
