@@ -15,6 +15,7 @@ public class Sword : ResetableObject
     private SpriteRenderer spriteRenderer;
     private Collider2D colliderComponent;
     private Vector3 rotation;
+    
 
     private void Awake()
     {
