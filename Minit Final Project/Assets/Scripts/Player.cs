@@ -11,14 +11,18 @@ public class Player : MonoBehaviour
 
     private bool isFacingRight = true;
 
+    public Sprite death;
+
     SpriteRenderer spriteRenderer;
 
     void Start()
     {
         sleep = false;
 
-        spriteRenderer = GetComponent<SpriteRenderer>();
-      
+        spriteRenderer = this.GetComponent<SpriteRenderer>();
+
+     
+
     }
 
     // Update is called once per frame
@@ -65,6 +69,14 @@ public class Player : MonoBehaviour
             {
                 vel += new Vector3(0, -moveSpeed, 0);
                 direction = "down";
+
+            }
+
+
+
+            if (Input.GetKey(KeyCode.R))
+            {
+                spriteRenderer.sprite = death;
 
             }
         }
