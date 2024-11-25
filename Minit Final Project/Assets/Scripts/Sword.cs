@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword : MonoBehaviour
+public class Sword : ResetableObject
 {
+    public static Sword reference;
     public float distance;
     public float delay;
     public float duration;
@@ -15,6 +16,11 @@ public class Sword : MonoBehaviour
     private Collider2D colliderComponent;
     private Vector3 rotation;
 
+    private void Awake()
+    {
+        reference = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,12 +30,14 @@ public class Sword : MonoBehaviour
         colliderComponent = this.GetComponent<Collider2D>();
         spriteRenderer.enabled = false;
         rotation = new Vector3(0, 0, 0);
+        ResetManager.addTo(this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.X))
+        if(Inventory.reference.equipped == "sword" && Input.GetKeyDown(KeyCode.X) && 
+            !playerScript.sleep && !playerScript.isDead)
         {
             playerScript.sleep = true;
             Invoke("Appear", delay);
@@ -82,11 +90,16 @@ public class Sword : MonoBehaviour
         DestroyableObject destroyable = collision.gameObject.GetComponent<DestroyableObject>();
         if (destroyable != null)
         {
-            if(collision.gameObject.CompareTag("Crab"))
+            if(collision.gameObject.GetComponent<Crab>() != null)
             {
                 crabsDestroyed += 1;
             }
             destroyable.Deactivate();        
         }
+    }
+
+    public override void Reset()
+    {
+        crabsDestroyed = 0;
     }
 }

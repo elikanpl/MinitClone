@@ -8,11 +8,17 @@ using UnityEngine.UIElements;
 
 public class ResetManager : MonoBehaviour
 {
+    public static ResetManager reference;
     public static List<ResetableObject> returnList;
     TextMeshProUGUI textMesh;
     public bool TimerActive;
 
-    public float currentTime = 60f;
+    public float currentTime;
+
+    private void Awake()
+    {
+        reference = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -21,13 +27,13 @@ public class ResetManager : MonoBehaviour
         {
             returnList = new List<ResetableObject>();
         }
-        textMesh.text = "Press R to start Timer";
+        currentTime = 60f;
+        textMesh.text = "";
     }
     void Update()
     {
         if(TimerActive)
         {
-            {
             if(currentTime > 0)
             {
                 String s = ((int)currentTime).ToString();
@@ -37,17 +43,15 @@ public class ResetManager : MonoBehaviour
             }
             else
             {
-                ResetRun();
-                TimerActive = true;
-                currentTime = 60f;
+                Player player = GameObject.Find("Player").GetComponent<Player>();
+                player.Die();
             }
-        }
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            TimerActive = true;
-            currentTime = 60f;
+        //if(Input.GetKeyDown(KeyCode.R))
+        //{
+        //    TimerActive = true;
+        //    currentTime = 60f;
 
-        }
+        //}
         }
     }
 
@@ -57,6 +61,8 @@ public class ResetManager : MonoBehaviour
         {
             g.Reset();
         }
+        TimerActive = true;
+        currentTime = 60f;
     }
 
     public static void addTo(ResetableObject g)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyableObject : MonoBehaviour
+public class DestroyableObject : ResetableObject
 {
     private SpriteRenderer sprRenderer;
     private Collider2D colliderComponent;
@@ -11,6 +11,8 @@ public class DestroyableObject : MonoBehaviour
     {
         sprRenderer = this.GetComponent<SpriteRenderer>();
         colliderComponent = this.GetComponent<Collider2D>();
+        start = transform.position;
+        ResetManager.addTo(this);
     }
 
     // Update is called once per frame
@@ -23,5 +25,12 @@ public class DestroyableObject : MonoBehaviour
     {
         sprRenderer.enabled = false;
         colliderComponent.enabled = false;
+    }
+
+    public override void Reset()
+    {
+        base.Reset();
+        sprRenderer.enabled = true;
+        colliderComponent.enabled = true;
     }
 }

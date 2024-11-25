@@ -3,31 +3,30 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : ResetableObject
 {
     // Start is called before the first frame update
     public float moveSpeed;
     public string direction;
     public bool sleep;
-
-
-
-    private bool isFacingRight = true;
-
-    private bool isDead = false;
+    public int lives;
 
     public Sprite death;
 
+    private bool isFacingRight = true;
+    public bool isDead;
+
     SpriteRenderer spriteRenderer;
+    private Animator animator;
 
     void Start()
     {
         sleep = false;
-
+        isDead = false;
         spriteRenderer = this.GetComponent<SpriteRenderer>();
-
-
-
+        animator = this.GetComponent<Animator>();
+        ResetManager.addTo(this);
+        lives = 2;
     }
 
     // Update is called once per frame
@@ -45,7 +44,6 @@ public class Player : MonoBehaviour
                 if (isFacingRight == false) {
                     spriteRenderer.flipX = false;
                     isFacingRight = true;
-
                 }
 
             }
@@ -59,10 +57,6 @@ public class Player : MonoBehaviour
                     spriteRenderer.flipX = true;
                     isFacingRight = false;
                 }
-                    
-               
-
-
             }
             if (Input.GetKey(KeyCode.W))
             {
@@ -77,15 +71,45 @@ public class Player : MonoBehaviour
 
             }
 
-
-
-            if (Input.GetKey(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.C) || lives <= 0)
             {
-                spriteRenderer.sprite = death;
-                isDead = true;
+                Die();
+            }
+            this.transform.position += vel * Time.deltaTime;
+        }
 
+        if (isDead)
+        {
+            // Need to write Press X to Continue to screen
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                ResetManager.reference.ResetRun();
             }
         }
-        this.transform.position += vel*Time.deltaTime;
+
     }
+
+    public override void Reset()
+    {
+        base.Reset();
+        lives = 2;
+        animator.enabled = true;
+        sleep = false;
+        Invoke("Live", 0.1f);
+    }
+
+    public void Die()
+    {
+        animator.enabled = false;
+        spriteRenderer.sprite = death;
+        sleep = true;
+        isDead = true;
+        ResetManager.reference.TimerActive = false;
+    }
+
+    private void Live()
+    {
+        isDead = false;
+    }
+
 }
