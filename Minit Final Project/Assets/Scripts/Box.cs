@@ -12,7 +12,9 @@ public class Box : MonoBehaviour
     public GameObject player;
 
     string direction = "helnbnjp"; 
-    float boxMoveSpeed; 
+    float boxMoveSpeed;
+
+   
 
 
     void OnCollisionEnter2D(Collision2D col)
@@ -33,13 +35,14 @@ public class Box : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 vel = new Vector3(0, 0, 0);
         direction = GameObject.Find("Player").GetComponent<Player>().direction;
         boxMoveSpeed = GameObject.Find("Player").GetComponent<Player>().moveSpeed;
 
+        Vector3 vel = new Vector3(0, 0, 0);
+
         if (isCurrentlyColliding)
         {
-           
+            Debug.Log("colliding");
 
             if (direction == "right")
             {
@@ -63,10 +66,8 @@ public class Box : MonoBehaviour
 
             }
         }
-        this.transform.position += vel;
+        this.transform.position += vel*Time.deltaTime;
         
-        Debug.Log(direction.ToString());
-
     }
    
     
