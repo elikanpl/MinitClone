@@ -80,7 +80,6 @@ public class Player : ResetableObject
 
         if (isDead)
         {
-            // Need to write Press X to Continue to screen
             if (Input.GetKeyDown(KeyCode.X))
             {
                 ResetManager.reference.ResetRun();
@@ -95,11 +94,14 @@ public class Player : ResetableObject
         lives = 2;
         animator.enabled = true;
         sleep = false;
+        // Slight delay to prevent sword being triggered from X input
         Invoke("Live", 0.1f);
     }
 
     public void Die()
     {
+        // Need to write Press X to Continue to screen
+        print("Press X to Continue");
         animator.enabled = false;
         spriteRenderer.sprite = death;
         sleep = true;

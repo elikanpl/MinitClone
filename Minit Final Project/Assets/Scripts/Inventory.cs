@@ -28,9 +28,10 @@ public class Inventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Sword.reference.crabsDestroyed >= 5)
+        if(Sword.reference.crabsDestroyed >= 5 && !coffee)
         {
-            //Modify to only get once entering the bar
+            // Need to modify to get from NPC
+            print("Coffee obtained!");
             coffee = true;
         }
     }

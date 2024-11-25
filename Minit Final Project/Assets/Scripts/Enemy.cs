@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.GetComponent<Player>() != null)
         {
             player.lives--;
-            //Invincibility frames - add flashing?
+            //Invincibility frames - add sprite flashing?
             playerCollider = collision.collider;
             playerCollider.enabled = false;
             Invoke("IFramesEnd", 1);
