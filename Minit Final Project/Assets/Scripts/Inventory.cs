@@ -35,4 +35,15 @@ public class Inventory : MonoBehaviour
             coffee = true;
         }
     }
+    public void CollectKey()
+    {
+        print("Key obtained!");
+        key = true;
+    }
+
+    public void CollectFlashlight()
+    {
+        print("Flashlight obtained!");
+        flashlight = true;
+    }
 }
