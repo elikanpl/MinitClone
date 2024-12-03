@@ -127,6 +127,7 @@ MonoBehaviour:
   lives: 0
   death: {fileID: 21300000, guid: e11429a4a3a4019478b509d55de9e4d0, type: 3}
   isDead: 0
+  bounceSpeed: 4
 --- !u!50 &1711300202055096732
 Rigidbody2D:
   serializedVersion: 4
