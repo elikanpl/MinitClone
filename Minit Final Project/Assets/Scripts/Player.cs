@@ -17,7 +17,12 @@ public class Player : ResetableObject
     public bool isDead;
 
     SpriteRenderer spriteRenderer;
+    Collider2D playerCollider;
     private Animator animator;
+
+    public float bounceSpeed;
+    private Vector3 bounce;
+    private bool bouncing;
 
     void Start()
     {
@@ -25,6 +30,7 @@ public class Player : ResetableObject
         isDead = false;
         spriteRenderer = this.GetComponent<SpriteRenderer>();
         animator = this.GetComponent<Animator>();
+        playerCollider = this.GetComponent<Collider2D>();
         ResetManager.addTo(this);
         lives = 2;
     }
@@ -86,12 +92,19 @@ public class Player : ResetableObject
             }
         }
 
+        // Bounce the player back when hit by an enemy
+        if(bouncing)
+        {
+            this.transform.position += bounce * Time.deltaTime;
+        }
+
     }
 
     public override void Reset()
     {
         base.Reset();
         lives = 2;
+        playerCollider.enabled = true;
         animator.enabled = true;
         sleep = false;
         // Slight delay to prevent sword being triggered from X input
@@ -102,6 +115,7 @@ public class Player : ResetableObject
     {
         // Need to write Press X to Continue to screen
         print("Press X to Continue");
+        CancelInvoke();
         animator.enabled = false;
         spriteRenderer.sprite = death;
         sleep = true;
@@ -113,5 +127,51 @@ public class Player : ResetableObject
     {
         isDead = false;
     }
+    public void GetHit(GameObject enemy)
+    {
+        sleep = true;
+        // Direction to bounce the player back
+        bounce = this.transform.position - enemy.transform.position;
+        bounce = bounce.normalized;
+        bounce *= bounceSpeed;
+        bouncing = true;
+        // Invincibility frames
+        InvokeRepeating("Flicker", 0.1f, 0.1f);
+        playerCollider.enabled = false;
+        Invoke("IFramesEnd", 1.2f);
+        if(lives > 1)
+        {
+            Invoke("BounceEnd", 0.05f);
+        }
+        else
+        {
+            Invoke("BounceEnd", 0.4f);
+        }
+        lives--;
 
+    }
+
+    private void IFramesEnd()
+    {
+        playerCollider.enabled = true;
+        spriteRenderer.enabled = true;
+        CancelInvoke();
+    }
+
+    // Flicker the sprite when damaged
+    private void Flicker()
+    {
+        spriteRenderer.enabled = !spriteRenderer.enabled;
+    }
+    private void BounceEnd()
+    {
+        sleep = false;
+        bouncing = false;
+        if (lives == 0)
+        {
+            // Stop flickering
+            CancelInvoke();
+            spriteRenderer.enabled = true;
+        }
+    }
 }
