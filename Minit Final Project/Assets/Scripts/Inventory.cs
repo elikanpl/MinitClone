@@ -28,12 +28,7 @@ public class Inventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Sword.reference.crabsDestroyed >= 5 && !coffee)
-        {
-            // Need to modify to get from NPC
-            print("Coffee obtained!");
-            coffee = true;
-        }
+        
     }
     public void CollectKey()
     {
@@ -45,5 +40,20 @@ public class Inventory : MonoBehaviour
     {
         print("Flashlight obtained!");
         flashlight = true;
+    }
+
+    public void CollectCoffee()
+    {
+        if (Sword.reference.crabsDestroyed >= 5 && !coffee)
+        {
+            // Need to modify to get from NPC
+            print("Coffee obtained!");
+            coffee = true;
+        }
+    }
+
+    private void CollectionScreen()
+    {
+        
     }
 }

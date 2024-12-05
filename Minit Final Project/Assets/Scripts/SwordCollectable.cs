@@ -20,6 +20,7 @@ public class SwordCollectable : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Player>() != null)
         {
+            print("Press space to use sword");
             Inventory.reference.sword = true;
             Inventory.reference.equipped = "sword";
             ResetManager.reference.TimerActive = true;

@@ -7,6 +7,8 @@ public class Player : ResetableObject
 {
     // Start is called before the first frame update
     public float moveSpeed;
+    public float climbSpeed;
+    private float normalSpeed;
     public string direction;
     public bool sleep;
     public int lives;
@@ -86,7 +88,7 @@ public class Player : ResetableObject
 
         if (isDead)
         {
-            if (Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 ResetManager.reference.ResetRun();
             }
@@ -114,7 +116,7 @@ public class Player : ResetableObject
     public void Die()
     {
         // Need to write Press X to Continue to screen
-        print("Press X to Continue");
+        print("Press Space to Continue");
         CancelInvoke();
         animator.enabled = false;
         spriteRenderer.sprite = death;
@@ -173,5 +175,20 @@ public class Player : ResetableObject
             CancelInvoke();
             spriteRenderer.enabled = true;
         }
+    }
+
+    // Climb the lighthouse ladder
+    public void Climb()
+    {
+        // TODO: Change sprite to climbing sprite
+        normalSpeed = moveSpeed;
+        moveSpeed = climbSpeed;
+    }
+
+    // Stop climbing the lighthouse ladder
+    public void StopClimb()
+    {
+        // TODO: Change sprite back
+        moveSpeed = normalSpeed;
     }
 }
