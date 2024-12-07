@@ -14,6 +14,7 @@ public class ResetManager : MonoBehaviour
     public bool TimerActive;
 
     public float currentTime;
+    public AudioSource tickSound;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class ResetManager : MonoBehaviour
         }
         currentTime = 60f;
         textMesh.text = "";
+        tickSound = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -40,11 +42,16 @@ public class ResetManager : MonoBehaviour
                 if(s != textMesh.text)
                     textMesh.text = ((int)currentTime).ToString();
                 currentTime -= Time.deltaTime;
+                if(currentTime < 11)
+                {
+                    if(!tickSound.isPlaying) tickSound.Play();
+                }
             }
             else
             {
                 Player player = GameObject.Find("Player").GetComponent<Player>();
                 player.Die();
+                tickSound.Stop();
             }
         //if(Input.GetKeyDown(KeyCode.R))
         //{
