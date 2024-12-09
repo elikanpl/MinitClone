@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  climbSpeed: 2
   direction: 
   sleep: 0
   lives: 0

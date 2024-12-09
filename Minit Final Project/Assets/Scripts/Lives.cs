@@ -1,42 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Lives : MonoBehaviour
 {
     private Player player;
-    private SpriteRenderer spriteRenderer;
-    private Camera cam;
+    private Image image;
 
     public Sprite twoLives;
     public Sprite oneLife;
     public Sprite zeroLives;
-    public Vector3 position;
     // Start is called before the first frame update
     void Start()
     {
         GameObject playerObj = GameObject.Find("Player");
         player = playerObj.GetComponent<Player>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        cam = Camera.main;
+        image = GetComponent<Image>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = cam.ViewportToWorldPoint(position);
-        if (player.lives == 2)
+        if(image != null)
         {
-            spriteRenderer.sprite = twoLives;
+            if (player.lives == 2)
+            {
+                image.sprite = twoLives;
+            }
+            if (player.lives == 1)
+            {
+                image.sprite = oneLife;
+            }
+            if (player.lives <= 0)
+            {
+                image.sprite = zeroLives;
+            }
         }
-        if (player.lives == 1)
-        {
-            spriteRenderer.sprite = oneLife;
-        }
-        if (player.lives <= 0)
-        {
-            spriteRenderer.sprite = zeroLives;
-        }
-
     }
 }

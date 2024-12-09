@@ -6,11 +6,13 @@ public class DestroyableObject : ResetableObject
 {
     private SpriteRenderer sprRenderer;
     private Collider2D colliderComponent;
+    public AudioSource sound;
     // Start is called before the first frame update
     void Start()
     {
         sprRenderer = this.GetComponent<SpriteRenderer>();
         colliderComponent = this.GetComponent<Collider2D>();
+        sound = this.GetComponent<AudioSource>();
         start = transform.position;
         ResetManager.addTo(this);
     }
@@ -23,6 +25,7 @@ public class DestroyableObject : ResetableObject
 
     public void Deactivate()
     {
+        if(sound != null) sound.Play();
         sprRenderer.enabled = false;
         colliderComponent.enabled = false;
     }
