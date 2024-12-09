@@ -81,6 +81,7 @@ public class Player : ResetableObject
 
             if (Input.GetKeyDown(KeyCode.C) || lives <= 0)
             {
+                TextManager.reference.DisplayDeath("You died!");
                 Die();
             }
             this.transform.position += vel * Time.deltaTime;
@@ -109,14 +110,15 @@ public class Player : ResetableObject
         playerCollider.enabled = true;
         animator.enabled = true;
         sleep = false;
+        TextManager.reference.HideDeath();
+        TextManager.reference.HideControls();
         // Slight delay to prevent sword being triggered from X input
         Invoke("Live", 0.1f);
     }
 
     public void Die()
     {
-        // Need to write Press X to Continue to screen
-        print("Press Space to Continue");
+        TextManager.reference.DisplayControls("Press Space to Continue");
         CancelInvoke();
         animator.enabled = false;
         spriteRenderer.sprite = death;

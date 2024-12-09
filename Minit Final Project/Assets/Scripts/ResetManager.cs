@@ -23,7 +23,7 @@ public class ResetManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        textMesh = GetComponentInChildren<TextMeshProUGUI>();
+        textMesh = GameObject.Find("TimerText").GetComponent<TextMeshProUGUI>();
         if(returnList == null)
         {
             returnList = new List<ResetableObject>();
@@ -60,6 +60,12 @@ public class ResetManager : MonoBehaviour
 
         //}
         }
+    }
+
+    public void TimerStart()
+    {
+        // Add timer start sound here
+        TimerActive = true;
     }
 
     public void ResetRun()

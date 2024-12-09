@@ -37,9 +37,10 @@ public class Sword : ResetableObject
     // Update is called once per frame
     void Update()
     {
-        if(Inventory.reference.equipped == "sword" && Input.GetKeyDown(KeyCode.Space) && 
+        if(Inventory.reference.sword && Input.GetKeyDown(KeyCode.Space) && 
             !playerScript.sleep && !playerScript.isDead)
         {
+            TextManager.reference.HideControls();
             playerScript.sleep = true;
             Invoke("Appear", delay);
         }
