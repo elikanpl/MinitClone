@@ -43,9 +43,11 @@ public class DarknessController : MonoBehaviour
             if(currentTile != savedTile)
             {
                 if(!hasFlashlight)
-                    hasFlashlight = Inventory.GetInventory().flashlight;
+                    if(Inventory.reference == null)
+                        hasFlashlight = false;
+                    else
+                        hasFlashlight = Inventory.reference.flashlight;
                 savedTile = currentTile;
-                Debug.Log(savedTile);
                 drawNew(savedTile);
             }
         }
@@ -72,7 +74,6 @@ public class DarknessController : MonoBehaviour
             }
         }
         }
-        Debug.Log("Here");
         drawBase((3,12));
         drawBase((16,4));
         

@@ -9,6 +9,7 @@ public class DarknessObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void noDark()
@@ -33,6 +34,8 @@ public class DarknessObject : MonoBehaviour
     }
     public int getVal()
     {
+        if(spriteRenderer == null)
+         return -1;
         if(spriteRenderer.sprite == Black)
             return 4;
         else if(spriteRenderer.sprite == Darkest)
