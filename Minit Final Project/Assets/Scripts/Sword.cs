@@ -16,6 +16,7 @@ public class Sword : ResetableObject
     private Collider2D colliderComponent;
     private Vector3 rotation;
     public bool disabled;
+    public AudioSource swordSound;
     
 
     private void Awake()
@@ -30,6 +31,7 @@ public class Sword : ResetableObject
         playerScript = player.GetComponent<Player>();
         spriteRenderer = this.GetComponent<SpriteRenderer>();
         colliderComponent = this.GetComponent<Collider2D>();
+        swordSound = this.GetComponent<AudioSource>();
         spriteRenderer.enabled = false;
         rotation = new Vector3(0, 0, 0);
         ResetManager.addTo(this);
@@ -41,7 +43,7 @@ public class Sword : ResetableObject
         if(Inventory.reference.sword && Input.GetKeyDown(KeyCode.Space) && 
             !playerScript.sleep && !playerScript.isDead && !disabled)
         {
-            print("Sword");
+            if (swordSound != null) swordSound.Play();
             TextManager.reference.HideControls();
             playerScript.sleep = true;
             Invoke("Appear", delay);

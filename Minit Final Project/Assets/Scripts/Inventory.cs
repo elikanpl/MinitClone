@@ -25,6 +25,8 @@ public class Inventory : MonoBehaviour
     private Vector3 position;
     public float spaceAboveHead;
 
+    public AudioSource itemCollectSound;
+
     private void Awake()
     {
         reference = this;
@@ -45,6 +47,7 @@ public class Inventory : MonoBehaviour
             itemSprite = item.GetComponent<SpriteRenderer>();
             itemSprite.enabled = false;
         }
+        itemCollectSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -107,7 +110,7 @@ public class Inventory : MonoBehaviour
             itemSprite.enabled = true;
         }
         
-        
+        if(itemCollectSound != null) itemCollectSound.Play();
         Sword.reference.disabled = true;
         player.animator.enabled = false;
         player.sleep = true;
