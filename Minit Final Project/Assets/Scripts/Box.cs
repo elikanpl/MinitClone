@@ -38,6 +38,8 @@ public class Box : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Inventory.reference == null)
+            return;
         if (Inventory.reference.coffee)
         {
             if (isCurrentlyColliding)

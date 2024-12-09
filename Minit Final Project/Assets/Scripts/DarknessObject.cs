@@ -10,7 +10,6 @@ public class DarknessObject : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = Black;
     }
 
     public void noDark()
@@ -32,5 +31,20 @@ public class DarknessObject : MonoBehaviour
     public void setBlack()
     {
         spriteRenderer.sprite = Black;
+    }
+    public int getVal()
+    {
+        if(spriteRenderer == null)
+         return -1;
+        if(spriteRenderer.sprite == Black)
+            return 4;
+        else if(spriteRenderer.sprite == Darkest)
+            return 3;
+        else if(spriteRenderer.sprite == Darker)
+            return 2;
+        else if(spriteRenderer.sprite == Dark)
+            return 1;
+        else
+            return 0;
     }
 }

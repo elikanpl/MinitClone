@@ -32,6 +32,8 @@ public class MinitDialogue : MonoBehaviour
             {
                 if(charMarker < currentDialogue.Length)
                 {
+                    if(currentDialogue[charMarker] == '\n')
+                        transform.parent.transform.position += new Vector3(0,14,0);
                     onUIString += currentDialogue[charMarker];
                     textMesh.text = onUIString;
                     charMarker += 1;
@@ -50,12 +52,21 @@ public class MinitDialogue : MonoBehaviour
         currentDialogue = s;
     }
 
-    public void StartTyping()
+    public void StartTyping(float f)
     {
+        charTiming = f;
         typing = true;
         image.enabled = true;
         onUIString = "";
         charMarker = 0;
+
+    }
+
+    public void closeText()
+    {
+        typing = false;
+        image.enabled = false;
+        textMesh.text = "";
 
     }
 

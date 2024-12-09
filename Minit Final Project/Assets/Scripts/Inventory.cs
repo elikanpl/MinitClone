@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -25,12 +26,15 @@ public class Inventory : MonoBehaviour
     private Vector3 position;
     public float spaceAboveHead;
 
+
+    public DialogueTrigger CoffeeChange;
     public AudioSource itemCollectSound;
 
     private void Awake()
     {
         reference = this;
     }
+
 
     // Start is called before the first frame update
     void Start()
@@ -96,7 +100,9 @@ public class Inventory : MonoBehaviour
             itemSprite.sprite = coffeeSpr;
             CollectionScreen();
             coffee = true;
+            CoffeeChange.text = "SO GLAD THOSE CRABS ARE GONE";
         }
+        
     }
 
     private void CollectionScreen()
