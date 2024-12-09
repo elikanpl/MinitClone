@@ -26,11 +26,9 @@ public class Inventory : MonoBehaviour
     private Vector3 position;
     public float spaceAboveHead;
 
-<<<<<<< HEAD
+
     public DialogueTrigger CoffeeChange;
-=======
     public AudioSource itemCollectSound;
->>>>>>> 62a69c04979f5c8abd6141be65d574f9a2d7cc18
 
     private void Awake()
     {
