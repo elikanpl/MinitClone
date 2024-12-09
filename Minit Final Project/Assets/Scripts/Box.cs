@@ -11,11 +11,8 @@ public class Box : MonoBehaviour
 
     public GameObject player;
 
-    string direction = "helnbnjp"; 
-    float boxMoveSpeed;
-
     public AudioSource pushSound;
-
+    private Rigidbody2D rb;
 
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -32,48 +29,29 @@ public class Box : MonoBehaviour
         pushSound = GetComponent<AudioSource>();
     }
 
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        rb.isKinematic = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Inventory.reference.coffee)
         {
-            direction = GameObject.Find("Player").GetComponent<Player>().direction;
-            boxMoveSpeed = GameObject.Find("Player").GetComponent<Player>().moveSpeed;
-
-            Vector3 vel = new Vector3(0, 0, 0);
-
             if (isCurrentlyColliding)
             {
-                pushSound.Play();
-                Debug.Log("colliding");
-
-                if (direction == "right")
+                rb.isKinematic = false;
+                if (!pushSound.isPlaying)
                 {
-                    vel += new Vector3(boxMoveSpeed, 0, 0);
-                    Debug.Log("right");
-                }
-                if (direction == "left")
-                {
-                    vel += new Vector3(-boxMoveSpeed, 0, 0);
-                    Debug.Log("left");
-                }
-                if (direction == "up")
-                {
-                    vel += new Vector3(0, boxMoveSpeed, 0);
-                    Debug.Log("up");
-                }
-                if (direction == "down")
-                {
-                    vel += new Vector3(0, -boxMoveSpeed, 0);
-                    Debug.Log("down");
-
+                    pushSound.Play();
                 }
             }
             else
             {
                 pushSound.Stop();
             }
-            this.transform.position += vel * Time.deltaTime;
         }
     }
    
