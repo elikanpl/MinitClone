@@ -15,6 +15,16 @@ public class Inventory : MonoBehaviour
     private bool collectionScreen;
     private bool gotSword;
 
+    public Sprite coffeeSpr;
+    public Sprite swordSpr;
+    public Sprite keySpr;
+    public Sprite flashlightSpr;
+    private GameObject item;
+    private SpriteRenderer itemSprite;
+    private GameObject currItem;
+    private Vector3 position;
+    public float spaceAboveHead;
+
     private void Awake()
     {
         reference = this;
@@ -29,6 +39,12 @@ public class Inventory : MonoBehaviour
         key = false;
         sprRenderer = GetComponent<SpriteRenderer>();
         player = GameObject.Find("Player").GetComponent<Player>();
+        item = GameObject.Find("Item");
+        if (item != null)
+        {
+            itemSprite = item.GetComponent<SpriteRenderer>();
+            itemSprite.enabled = false;
+        }
     }
 
     // Update is called once per frame
@@ -46,14 +62,16 @@ public class Inventory : MonoBehaviour
     public void CollectSword()
     {
         TextManager.reference.DisplayItemText("Got the sword!");
+        itemSprite.sprite = swordSpr;
         CollectionScreen();
         sword = true;
         gotSword = true;
-        ResetManager.reference.TimerStart();
+        
     }
     public void CollectKey()
     {
         TextManager.reference.DisplayItemText("Got the key!");
+        itemSprite.sprite = keySpr;
         CollectionScreen();
         print("Key obtained!");
         key = true;
@@ -61,6 +79,7 @@ public class Inventory : MonoBehaviour
 
     public void CollectFlashlight()
     {
+        itemSprite.sprite = flashlightSpr;
         TextManager.reference.DisplayItemText("Got the flashlight!");
         CollectionScreen();
         flashlight = true;
@@ -71,6 +90,7 @@ public class Inventory : MonoBehaviour
         if (Sword.reference.crabsDestroyed >= 5 && !coffee)
         {
             TextManager.reference.DisplayItemText("Got the coffee!");
+            itemSprite.sprite = coffeeSpr;
             CollectionScreen();
             coffee = true;
         }
@@ -78,17 +98,31 @@ public class Inventory : MonoBehaviour
 
     private void CollectionScreen()
     {
+        // Display collected item above player's head
+        if(item != null)
+        {
+            position = player.transform.position;
+            position.y += spaceAboveHead;
+            item.transform.position = position;
+            itemSprite.enabled = true;
+        }
+        
+        
+        Sword.reference.disabled = true;
+        player.animator.enabled = false;
+        player.sleep = true;
         collectionScreen = true;
         sprRenderer.enabled = true;
         Vector3 camPos = Camera.main.transform.position;
         this.transform.position = new Vector3(camPos.x, camPos.y, this.transform.position.z);
-        player.sleep = true;
         ResetManager.reference.TimerActive = false;
         TextManager.reference.DisplayControls("Press Space to Continue");
     }
 
     private void CollectionScreenEnd()
     {
+        if(itemSprite!= null) itemSprite.enabled = false;
+        player.animator.enabled = true;
         collectionScreen = false;
         player.sleep = false;
         sprRenderer.enabled = false;
@@ -98,8 +132,14 @@ public class Inventory : MonoBehaviour
         if(gotSword)
         {
             TextManager.reference.DisplayControls("Press Space to Use Sword");
+            ResetManager.reference.TimerStart();
             gotSword = false;
         }
+        Invoke("UnfreezeSword", 0.1f);
     }
 
+    private void UnfreezeSword()
+    {
+        Sword.reference.disabled = false;
+    }
 }

@@ -20,12 +20,13 @@ public class Player : ResetableObject
 
     SpriteRenderer spriteRenderer;
     Collider2D playerCollider;
-    private Animator animator;
+    public Animator animator;
 
     public float bounceSpeed;
     private Vector3 bounce;
     private bool bouncing;
 
+    private AudioSource deathSound;
     void Start()
     {
         sleep = false;
@@ -35,6 +36,7 @@ public class Player : ResetableObject
         playerCollider = this.GetComponent<Collider2D>();
         ResetManager.addTo(this);
         lives = 2;
+        deathSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -118,6 +120,7 @@ public class Player : ResetableObject
 
     public void Die()
     {
+        deathSound.Play();
         TextManager.reference.DisplayControls("Press Space to Continue");
         CancelInvoke();
         animator.enabled = false;

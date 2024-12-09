@@ -14,7 +14,7 @@ public class Box : MonoBehaviour
     string direction = "helnbnjp"; 
     float boxMoveSpeed;
 
-   
+    public AudioSource pushSound;
 
 
     void OnCollisionEnter2D(Collision2D col)
@@ -29,7 +29,7 @@ public class Box : MonoBehaviour
 
     void Awake()
     {
-
+        pushSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -44,6 +44,7 @@ public class Box : MonoBehaviour
 
             if (isCurrentlyColliding)
             {
+                pushSound.Play();
                 Debug.Log("colliding");
 
                 if (direction == "right")
@@ -67,6 +68,10 @@ public class Box : MonoBehaviour
                     Debug.Log("down");
 
                 }
+            }
+            else
+            {
+                pushSound.Stop();
             }
             this.transform.position += vel * Time.deltaTime;
         }

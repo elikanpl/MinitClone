@@ -11,6 +11,7 @@ public class ResetManager : MonoBehaviour
     public static ResetManager reference;
     public static List<ResetableObject> returnList;
     TextMeshProUGUI textMesh;
+    private GameObject timerBackground;
     public bool TimerActive;
 
     public float currentTime;
@@ -24,6 +25,8 @@ public class ResetManager : MonoBehaviour
     void Start()
     {
         textMesh = GameObject.Find("TimerText").GetComponent<TextMeshProUGUI>();
+        timerBackground = GameObject.Find("TimerBackground");
+        timerBackground.SetActive(false);
         if(returnList == null)
         {
             returnList = new List<ResetableObject>();
@@ -50,6 +53,7 @@ public class ResetManager : MonoBehaviour
             else
             {
                 Player player = GameObject.Find("Player").GetComponent<Player>();
+                TextManager.reference.DisplayDeath("Time's up!");
                 player.Die();
                 tickSound.Stop();
             }
@@ -60,11 +64,16 @@ public class ResetManager : MonoBehaviour
 
         //}
         }
+        else
+        {
+            tickSound.Stop();
+        }
     }
 
     public void TimerStart()
     {
         // Add timer start sound here
+        timerBackground.SetActive(true);
         TimerActive = true;
     }
 
