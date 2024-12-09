@@ -20,10 +20,12 @@ public class BuildingLogic : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        GetComponent<SpriteRenderer>().enabled = true;
+        if(col.gameObject.GetComponent<Player>() != null)
+            GetComponent<SpriteRenderer>().enabled = true;
     }
     void OnTriggerExit2D(Collider2D col)
     {
-        GetComponent<SpriteRenderer>().enabled = false;
+        if (col.gameObject.GetComponent<Player>() != null)
+            GetComponent<SpriteRenderer>().enabled = false;
     }
 }
