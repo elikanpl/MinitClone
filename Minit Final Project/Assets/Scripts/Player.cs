@@ -26,7 +26,8 @@ public class Player : ResetableObject
     private Vector3 bounce;
     private bool bouncing;
 
-    private AudioSource deathSound;
+    public AudioSource deathSound;
+    public AudioSource hurtSound;
     void Start()
     {
         sleep = false;
@@ -36,7 +37,7 @@ public class Player : ResetableObject
         playerCollider = this.GetComponent<Collider2D>();
         ResetManager.addTo(this);
         lives = 2;
-        deathSound = GetComponent<AudioSource>();
+        hurtSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -120,7 +121,7 @@ public class Player : ResetableObject
 
     public void Die()
     {
-        deathSound.Play();
+        if(deathSound != null) deathSound.Play();
         TextManager.reference.DisplayControls("Press Space to Continue");
         CancelInvoke();
         animator.enabled = false;
@@ -136,6 +137,7 @@ public class Player : ResetableObject
     }
     public void GetHit(GameObject enemy)
     {
+        if(hurtSound != null) hurtSound.Play();
         sleep = true;
         // Direction to bounce the player back
         bounce = this.transform.position - enemy.transform.position;

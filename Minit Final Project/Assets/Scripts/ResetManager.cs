@@ -16,7 +16,7 @@ public class ResetManager : MonoBehaviour
 
     public float currentTime;
     public AudioSource tickSound;
-
+    public AudioSource timerStartSound;
     private void Awake()
     {
         reference = this;
@@ -33,7 +33,6 @@ public class ResetManager : MonoBehaviour
         }
         currentTime = 60f;
         textMesh.text = "";
-        tickSound = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -57,12 +56,6 @@ public class ResetManager : MonoBehaviour
                 player.Die();
                 tickSound.Stop();
             }
-        //if(Input.GetKeyDown(KeyCode.R))
-        //{
-        //    TimerActive = true;
-        //    currentTime = 60f;
-
-        //}
         }
         else
         {
@@ -72,7 +65,7 @@ public class ResetManager : MonoBehaviour
 
     public void TimerStart()
     {
-        // Add timer start sound here
+        if(timerStartSound != null) timerStartSound.Play();
         timerBackground.SetActive(true);
         TimerActive = true;
     }
