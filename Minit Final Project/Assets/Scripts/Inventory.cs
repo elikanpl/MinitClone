@@ -27,7 +27,14 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-        reference = this;
+        reference = GetInventory();
+    }
+
+    public static Inventory GetInventory()
+    {
+        if(reference = null)
+            reference = new Inventory();
+        return reference;
     }
 
     // Start is called before the first frame update

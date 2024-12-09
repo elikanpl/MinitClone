@@ -14,6 +14,8 @@ public class DarknessController : MonoBehaviour
 
     public bool enabled = false;
 
+    bool hasFlashlight = false;
+
     (int,int) savedTile = (0,0);
     // Start is called before the first frame update
     void Start()
@@ -27,8 +29,10 @@ public class DarknessController : MonoBehaviour
                 darkArray[i,j] = g.GetComponent<DarknessObject>();
             }
         }
-
+        
         playerRef = FindObjectOfType<Player>().gameObject;
+        drawBase((3,12));
+        drawBase((16,4));
     }
 
     void Update()
@@ -38,7 +42,8 @@ public class DarknessController : MonoBehaviour
             (int,int) currentTile = ((int)Mathf.Floor(playerRef.transform.position.x-transform.position.x), (int)Mathf.Floor(transform.position.y-playerRef.transform.position.y));
             if(currentTile != savedTile)
             {
-                
+                if(!hasFlashlight)
+                    hasFlashlight = Inventory.GetInventory().flashlight;
                 savedTile = currentTile;
                 Debug.Log(savedTile);
                 drawNew(savedTile);
@@ -48,20 +53,47 @@ public class DarknessController : MonoBehaviour
 
     void drawNew((int x,int y) tile)
     {
+        if(hasFlashlight)
+        {
         for(int i = tile.x -6; i <= tile.x + 6; i++)
         {
             for(int j = tile.y -6; j <= tile.y + 6; j++)
             {
-                if(Mathf.Abs(i -tile.x) > 5 || Mathf.Abs(j - tile.y) > 5)
+                if(Mathf.Abs(i -tile.x) > 5 || Mathf.Abs(j - tile.y) > 5 || Mathf.Abs(i -tile.x) + Mathf.Abs(j - tile.y) > 5)
                     setTileAt((i,j),4);
-                else if(Mathf.Abs(i -tile.x) > 4 || Mathf.Abs(j - tile.y) > 4)
+                else if(Mathf.Abs(i -tile.x) > 4 || Mathf.Abs(j - tile.y) > 4|| Mathf.Abs(i -tile.x) + Mathf.Abs(j - tile.y) > 4)
                     setTileAt((i,j),3);
-                else if(Mathf.Abs(i -tile.x) > 3 || Mathf.Abs(j - tile.y) > 3)
+                else if(Mathf.Abs(i -tile.x) > 3 || Mathf.Abs(j - tile.y) > 3 || Mathf.Abs(i -tile.x) + Mathf.Abs(j - tile.y) > 3)
                     setTileAt((i,j),2);
-                else if(Mathf.Abs(i -tile.x) > 2 || Mathf.Abs(j - tile.y) > 2)
+                else if(Mathf.Abs(i -tile.x) > 2 || Mathf.Abs(j - tile.y) > 2 )
                     setTileAt((i,j),1);
                 else
                     setTileAt((i,j),0);
+            }
+        }
+        }
+        Debug.Log("Here");
+        drawBase((3,12));
+        drawBase((16,4));
+        
+
+    }
+    void drawBase((int x,int y) tile)
+    {
+    for(int i = tile.x -3; i <= tile.x + 3; i++)
+        {
+            for(int j = tile.y -3; j <= tile.y + 3; j++)
+            {
+                if(Mathf.Abs(i -tile.x) > 4 || Mathf.Abs(j - tile.y) > 4|| Mathf.Abs(i -tile.x) + Mathf.Abs(j - tile.y) > 4)
+                {
+                    setTileAtCheck((i,j),4);
+                }
+                else if(Mathf.Abs(i -tile.x) > 3 || Mathf.Abs(j - tile.y) > 3 || Mathf.Abs(i -tile.x) + Mathf.Abs(j - tile.y) > 3)
+                    setTileAtCheck((i,j),3);
+                else if(Mathf.Abs(i -tile.x) > 2 || Mathf.Abs(j - tile.y) > 2 )
+                    setTileAtCheck((i,j),2);
+                else
+                    setTileAtCheck((i,j),0);
             }
         }
     }
@@ -72,6 +104,28 @@ public class DarknessController : MonoBehaviour
             return false;
         if(tile.y > 14 || tile.y < 0)
             return false;
+        if(c == 4)
+            darkArray[tile.x,tile.y].setBlack();
+        if(c == 3)
+            darkArray[tile.x,tile.y].setDarkest();
+        if(c == 2)
+            darkArray[tile.x,tile.y].setDarker();
+        if(c == 1)
+            darkArray[tile.x,tile.y].setDark();
+        if(c == 0)
+            darkArray[tile.x,tile.y].noDark();
+        return true;
+    }
+    bool setTileAtCheck((int x, int y) tile, int c)
+    {
+        if(tile.x > 19 || tile.x < 0)
+            return false;
+        if(tile.y > 14 || tile.y < 0)
+            return false;
+
+        if(darkArray[tile.x,tile.y].getVal() <= c)
+            return false;
+
         if(c == 4)
             darkArray[tile.x,tile.y].setBlack();
         if(c == 3)
