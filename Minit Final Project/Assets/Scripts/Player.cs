@@ -20,12 +20,13 @@ public class Player : ResetableObject
 
     SpriteRenderer spriteRenderer;
     Collider2D playerCollider;
-    private Animator animator;
+    public Animator animator;
 
     public float bounceSpeed;
     private Vector3 bounce;
     private bool bouncing;
 
+    private AudioSource deathSound;
     void Start()
     {
         sleep = false;
@@ -35,6 +36,7 @@ public class Player : ResetableObject
         playerCollider = this.GetComponent<Collider2D>();
         ResetManager.addTo(this);
         lives = 2;
+        deathSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -81,6 +83,7 @@ public class Player : ResetableObject
 
             if (Input.GetKeyDown(KeyCode.C) || lives <= 0)
             {
+                TextManager.reference.DisplayDeath("You died!");
                 Die();
             }
             this.transform.position += vel * Time.deltaTime;
@@ -109,14 +112,16 @@ public class Player : ResetableObject
         playerCollider.enabled = true;
         animator.enabled = true;
         sleep = false;
+        TextManager.reference.HideDeath();
+        TextManager.reference.HideControls();
         // Slight delay to prevent sword being triggered from X input
         Invoke("Live", 0.1f);
     }
 
     public void Die()
     {
-        // Need to write Press X to Continue to screen
-        print("Press Space to Continue");
+        deathSound.Play();
+        TextManager.reference.DisplayControls("Press Space to Continue");
         CancelInvoke();
         animator.enabled = false;
         spriteRenderer.sprite = death;

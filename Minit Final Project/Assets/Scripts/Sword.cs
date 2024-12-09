@@ -15,6 +15,7 @@ public class Sword : ResetableObject
     private SpriteRenderer spriteRenderer;
     private Collider2D colliderComponent;
     private Vector3 rotation;
+    public bool disabled;
     
 
     private void Awake()
@@ -37,9 +38,11 @@ public class Sword : ResetableObject
     // Update is called once per frame
     void Update()
     {
-        if(Inventory.reference.equipped == "sword" && Input.GetKeyDown(KeyCode.Space) && 
-            !playerScript.sleep && !playerScript.isDead)
+        if(Inventory.reference.sword && Input.GetKeyDown(KeyCode.Space) && 
+            !playerScript.sleep && !playerScript.isDead && !disabled)
         {
+            print("Sword");
+            TextManager.reference.HideControls();
             playerScript.sleep = true;
             Invoke("Appear", delay);
         }
