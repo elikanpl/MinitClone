@@ -26,6 +26,8 @@ public class Player : ResetableObject
     private Vector3 bounce;
     private bool bouncing;
 
+    public Sprite standing;
+
     public AudioSource deathSound;
     public AudioSource hurtSound;
     void Start()
@@ -82,10 +84,22 @@ public class Player : ResetableObject
 
             }
 
-            if (Input.GetKeyDown(KeyCode.C) || lives <= 0)
+            if ((Inventory.reference.sword && Input.GetKeyDown(KeyCode.C)) || lives <= 0)
             {
                 TextManager.reference.DisplayDeath("You died!");
                 Die();
+            }
+            if(!isDead)
+            {
+                if (vel == new Vector3(0, 0, 0))
+                {
+                    animator.enabled = false;
+                    spriteRenderer.sprite = standing;
+                }
+                else
+                {
+                    animator.enabled = true;
+                }
             }
             this.transform.position += vel * Time.deltaTime;
         }
