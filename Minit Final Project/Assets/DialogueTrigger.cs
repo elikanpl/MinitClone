@@ -20,13 +20,17 @@ public class DialogueTrigger : MonoBehaviour
     // Update is called once per frame
     void OnTriggerEnter2D(Collider2D col)
     {
+        if(col.gameObject.tag == "Player")
+        {
         dialogueController.SetPos(transform.position);
         dialogueController.SetText(text);
         dialogueController.StartTyping(scrollSpeed);
+        }
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
-        dialogueController.closeText();
-    }
+        if(col.gameObject.tag == "Player")
+            dialogueController.closeText();
+    }   
 }
