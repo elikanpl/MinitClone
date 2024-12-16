@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -4359969044730139168}
   - component: {fileID: 2934281580743369795}
   - component: {fileID: -7503887171281910419}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Snake
   m_TagString: Untagged
   m_Icon: {fileID: 0}

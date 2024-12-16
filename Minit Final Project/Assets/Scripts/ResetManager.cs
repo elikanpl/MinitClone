@@ -42,7 +42,14 @@ public class ResetManager : MonoBehaviour
             {
                 String s = ((int)currentTime).ToString();
                 if(s != textMesh.text)
-                    textMesh.text = ((int)currentTime).ToString();
+                {
+                    if(currentTime < 10)
+                    {
+                        textMesh.text = "0" + ((int)currentTime).ToString();
+                    }
+                    else
+                        textMesh.text = ((int)currentTime).ToString();
+                }
                 currentTime -= Time.deltaTime;
                 if(currentTime < 11)
                 {
@@ -76,8 +83,11 @@ public class ResetManager : MonoBehaviour
         {
             g.Reset();
         }
-        TimerActive = true;
-        currentTime = 60f;
+        if (Inventory.reference.sword)
+        {
+            TimerActive = true;
+            currentTime = 60f;
+        }
     }
 
     public static void addTo(ResetableObject g)
