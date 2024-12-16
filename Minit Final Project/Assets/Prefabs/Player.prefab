@@ -133,8 +133,12 @@ MonoBehaviour:
   animator: {fileID: 0}
   bounceSpeed: 4
   standing: {fileID: 21300000, guid: 007d9f11828d97949be7c2dd7b22ada0, type: 3}
+  standingWithSword: {fileID: 21300000, guid: 8a4eede4a1b90e64097f5012626cff5b, type: 3}
+  climbStill: {fileID: 21300000, guid: e56bca98997a67c4b98722780223a86d, type: 3}
   deathSound: {fileID: -6857163393956402890}
   hurtSound: {fileID: -136700250840041656}
+  withSword: {fileID: 9100000, guid: 5c1a4aca66692c54d8f30d7f27bb0940, type: 2}
+  climbing: {fileID: 9100000, guid: d46691c0bbd8dc343b07f997b4dcdb5b, type: 2}
 --- !u!50 &1711300202055096732
 Rigidbody2D:
   serializedVersion: 4

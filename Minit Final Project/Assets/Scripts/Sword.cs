@@ -56,6 +56,7 @@ public class Sword : ResetableObject
     //Need to add collision
     private void Appear()
     {
+        playerScript.UnequipSword();
         spriteRenderer.enabled = true;
         colliderComponent.enabled = true;
         Vector3 newPos = new Vector3(player.transform.position.x, player.transform.position.y, this.transform.position.z);
@@ -87,6 +88,7 @@ public class Sword : ResetableObject
 
     private void Disappear()
     {
+        playerScript.EquipSword();
         gameObject.transform.rotation = Quaternion.identity;
         spriteRenderer.enabled = false;
         colliderComponent.enabled = false;

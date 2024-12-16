@@ -30,7 +30,7 @@ public class DestroyableObject : ResetableObject
         if(sound != null) sound.Play();
         sprRenderer.enabled = false;
         colliderComponent.enabled = false;
-        leaves.Play();
+        if(leaves != null) leaves.Play();
     }
 
     public override void Reset()
