@@ -8,6 +8,8 @@ public class DestroyableObject : ResetableObject
     private Collider2D colliderComponent;
     public AudioSource sound;
     // Start is called before the first frame update
+
+    public ParticleSystem leaves;
     void Start()
     {
         sprRenderer = this.GetComponent<SpriteRenderer>();
@@ -28,6 +30,7 @@ public class DestroyableObject : ResetableObject
         if(sound != null) sound.Play();
         sprRenderer.enabled = false;
         colliderComponent.enabled = false;
+        leaves.Play();
     }
 
     public override void Reset()
