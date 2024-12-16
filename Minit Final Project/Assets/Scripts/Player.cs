@@ -30,6 +30,8 @@ public class Player : ResetableObject
 
     public AudioSource deathSound;
     public AudioSource hurtSound;
+
+    private LayerMask noExclusions;
     void Start()
     {
         sleep = false;
@@ -40,11 +42,13 @@ public class Player : ResetableObject
         ResetManager.addTo(this);
         lives = 2;
         hurtSound = GetComponent<AudioSource>();
+        noExclusions = playerCollider.excludeLayers;
     }
 
     // Update is called once per frame
     void Update()
     {
+
         Vector3 vel = new Vector3(0, 0, 0);
 
         if (!sleep)
@@ -89,19 +93,20 @@ public class Player : ResetableObject
                 TextManager.reference.DisplayDeath("You died!");
                 Die();
             }
-            if(!isDead)
-            {
-                if (vel == new Vector3(0, 0, 0))
-                {
-                    animator.enabled = false;
-                    spriteRenderer.sprite = standing;
-                }
-                else
-                {
-                    animator.enabled = true;
-                }
-            }
+            
             this.transform.position += vel * Time.deltaTime;
+        }
+        if (!isDead)
+        {
+            if (vel == new Vector3(0, 0, 0))
+            {
+                animator.enabled = false;
+                spriteRenderer.sprite = standing;
+            }
+            else
+            {
+                animator.enabled = true;
+            }
         }
 
         if (isDead)
@@ -124,7 +129,7 @@ public class Player : ResetableObject
     {
         base.Reset();
         lives = 2;
-        playerCollider.enabled = true;
+        playerCollider.excludeLayers = noExclusions;
         animator.enabled = true;
         sleep = false;
         TextManager.reference.HideDeath();
@@ -160,7 +165,8 @@ public class Player : ResetableObject
         bouncing = true;
         // Invincibility frames
         InvokeRepeating("Flicker", 0.1f, 0.1f);
-        playerCollider.enabled = false;
+        //playerCollider.enabled = false;
+        playerCollider.excludeLayers = LayerMask.GetMask("Enemy");
         Invoke("IFramesEnd", 1.2f);
         if(lives > 1)
         {
@@ -176,7 +182,8 @@ public class Player : ResetableObject
 
     private void IFramesEnd()
     {
-        playerCollider.enabled = true;
+        //playerCollider.enabled = true;
+        playerCollider.excludeLayers = noExclusions;
         spriteRenderer.enabled = true;
         CancelInvoke();
     }

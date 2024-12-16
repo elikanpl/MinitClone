@@ -118,7 +118,6 @@ public class Inventory : MonoBehaviour
         
         if(itemCollectSound != null) itemCollectSound.Play();
         Sword.reference.disabled = true;
-        player.animator.enabled = false;
         player.sleep = true;
         collectionScreen = true;
         sprRenderer.enabled = true;
@@ -131,7 +130,6 @@ public class Inventory : MonoBehaviour
     private void CollectionScreenEnd()
     {
         if(itemSprite!= null) itemSprite.enabled = false;
-        player.animator.enabled = true;
         collectionScreen = false;
         player.sleep = false;
         sprRenderer.enabled = false;
