@@ -15,9 +15,11 @@ public class MinitDialogue : MonoBehaviour
     TextMeshProUGUI textMesh;
     bool typing = false;
     Image image;
+    public Player player;
     // Start is called before the first frame update
     void Start()
     {
+        player = FindObjectOfType<Player>();
         textMesh = GetComponent<TextMeshProUGUI>();
         image = GetComponentInParent<Image>();
     }
@@ -27,6 +29,11 @@ public class MinitDialogue : MonoBehaviour
     {
         if(typing)
         {
+        if(player.isDead)
+        {
+            typing = false;
+            return;
+        }
         timer += Time.deltaTime;
             if(timer > charTiming)
             {
