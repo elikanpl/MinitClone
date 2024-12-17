@@ -27,9 +27,15 @@ public class Player : ResetableObject
     private bool bouncing;
 
     public Sprite standing;
+    public Sprite standingWithSword;
+    public Sprite climbStill;
+    private Sprite stillSprite;
 
     public AudioSource deathSound;
     public AudioSource hurtSound;
+
+    public RuntimeAnimatorController withSword;
+    public RuntimeAnimatorController climbing;
 
     private LayerMask noExclusions;
     void Start()
@@ -43,6 +49,7 @@ public class Player : ResetableObject
         lives = 2;
         hurtSound = GetComponent<AudioSource>();
         noExclusions = playerCollider.excludeLayers;
+        stillSprite = standing;
     }
 
     // Update is called once per frame
@@ -101,7 +108,7 @@ public class Player : ResetableObject
             if (vel == new Vector3(0, 0, 0))
             {
                 animator.enabled = false;
-                spriteRenderer.sprite = standing;
+                spriteRenderer.sprite = stillSprite;
             }
             else
             {
@@ -208,7 +215,8 @@ public class Player : ResetableObject
     // Climb the lighthouse ladder
     public void Climb()
     {
-        // TODO: Change sprite to climbing sprite
+        animator.runtimeAnimatorController = climbing;
+        stillSprite = climbStill;
         normalSpeed = moveSpeed;
         moveSpeed = climbSpeed;
     }
@@ -216,7 +224,19 @@ public class Player : ResetableObject
     // Stop climbing the lighthouse ladder
     public void StopClimb()
     {
-        // TODO: Change sprite back
+        animator.runtimeAnimatorController = withSword;
+        stillSprite = standingWithSword;
         moveSpeed = normalSpeed;
+    }
+
+    public void EquipSword()
+    {
+        animator.runtimeAnimatorController = withSword;
+        stillSprite = standingWithSword;
+    }
+
+    public void UnequipSword()
+    {
+        stillSprite = standing;
     }
 }

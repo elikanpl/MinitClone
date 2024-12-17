@@ -140,6 +140,7 @@ public class Inventory : MonoBehaviour
         {
             TextManager.reference.DisplayControls("Press Space to Use Sword");
             ResetManager.reference.TimerStart();
+            player.EquipSword();
             gotSword = false;
         }
         Invoke("UnfreezeSword", 0.1f);
